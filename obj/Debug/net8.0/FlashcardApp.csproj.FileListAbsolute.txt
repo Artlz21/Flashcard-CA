@@ -1,0 +1,14 @@
+C:\Users\darl5\OneDrive\Desktop\MicrosoftCertifications\MyProjects\FlashcardApp\bin\Debug\net8.0\FlashcardApp.exe
+C:\Users\darl5\OneDrive\Desktop\MicrosoftCertifications\MyProjects\FlashcardApp\bin\Debug\net8.0\FlashcardApp.deps.json
+C:\Users\darl5\OneDrive\Desktop\MicrosoftCertifications\MyProjects\FlashcardApp\bin\Debug\net8.0\FlashcardApp.runtimeconfig.json
+C:\Users\darl5\OneDrive\Desktop\MicrosoftCertifications\MyProjects\FlashcardApp\bin\Debug\net8.0\FlashcardApp.dll
+C:\Users\darl5\OneDrive\Desktop\MicrosoftCertifications\MyProjects\FlashcardApp\bin\Debug\net8.0\FlashcardApp.pdb
+C:\Users\darl5\OneDrive\Desktop\MicrosoftCertifications\MyProjects\FlashcardApp\obj\Debug\net8.0\FlashcardApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\darl5\OneDrive\Desktop\MicrosoftCertifications\MyProjects\FlashcardApp\obj\Debug\net8.0\FlashcardApp.AssemblyInfoInputs.cache
+C:\Users\darl5\OneDrive\Desktop\MicrosoftCertifications\MyProjects\FlashcardApp\obj\Debug\net8.0\FlashcardApp.AssemblyInfo.cs
+C:\Users\darl5\OneDrive\Desktop\MicrosoftCertifications\MyProjects\FlashcardApp\obj\Debug\net8.0\FlashcardApp.csproj.CoreCompileInputs.cache
+C:\Users\darl5\OneDrive\Desktop\MicrosoftCertifications\MyProjects\FlashcardApp\obj\Debug\net8.0\FlashcardApp.dll
+C:\Users\darl5\OneDrive\Desktop\MicrosoftCertifications\MyProjects\FlashcardApp\obj\Debug\net8.0\refint\FlashcardApp.dll
+C:\Users\darl5\OneDrive\Desktop\MicrosoftCertifications\MyProjects\FlashcardApp\obj\Debug\net8.0\FlashcardApp.pdb
+C:\Users\darl5\OneDrive\Desktop\MicrosoftCertifications\MyProjects\FlashcardApp\obj\Debug\net8.0\FlashcardApp.genruntimeconfig.cache
+C:\Users\darl5\OneDrive\Desktop\MicrosoftCertifications\MyProjects\FlashcardApp\obj\Debug\net8.0\ref\FlashcardApp.dll
