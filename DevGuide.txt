@@ -1,0 +1,154 @@
+Flashcard app
+-------------------------------------------------
+
+This is a Flashcard study app that can group 
+cards into stacks of cards for study. The user 
+can create stacks and add cards to them and keep 
+a list of stacks to study one at a time. When 
+studying the cards will structured in a way 
+where the card number and a front or back side is
+showing. When selected the card will flip and 
+when selected the next card or previous will be 
+shown. At all points an option will be present 
+to go to the previous menu or exit the app from 
+the main menu. Each study session is scored and
+logged to track improvement over time.
+
+Requirements
+-------------------------------------------------
+
+1. User should start app and see menu with list 
+of options to select.
+
+2. User should select add stack option to create
+a new stack to add flashcards too. 
+
+3. Adding a new stack should create a new table
+that will store cards.
+
+4. Table should be connect to another table that 
+keeps a record of existing stacks. 
+
+5. User should not be able to create a new stack
+with the same name as an existing stack.
+
+6. User should be able to select to return to 
+main menu.
+
+7. User should be able to select delete stack 
+from the main menu.
+
+8. User should see a list of existing stacks to
+delete. 
+
+9. User should enter a name of existing stack to 
+delete.
+
+10. User should be prompted to confirm deletion.
+
+11. User should see stack is deleted from records
+and list being shown.
+
+12. User should be able to select to return to 
+main menu.
+
+13. User should be able to select add flashcard.
+
+14. User should see list of stacks to add a 
+flashcard to. 
+
+15. User should be able to select stack to add to
+or select an option to return to main menu.
+
+16. User should be prompted to enter text for the
+front then back sides of a card.
+
+17. User should be able to see the text added to 
+both sides and confirm entry.
+
+18. User should be able to select delete 
+flashcard.
+
+19. User should see list of stacks to select from
+or return to menu. 
+
+20. User should be taken to list of cards 
+showning front text and card number to select one
+or return to stacks list menu.
+
+21. After deleting user should be taken back to 
+list of cards in stack to either delete another
+or return to previous menu.
+
+22. User should select study session and see a 
+list of stacks to choose from or return.
+
+23. User should see a formated card that will
+show them the front and card number.
+
+24. User will enter an answer to the front side
+and will be marked as correct or incorrect.
+
+25. The score will be talied and showed at the 
+end and logged into a record of all sessions.
+
+26. The user can select view study sessions by 
+stack to see the list of stacks to select from.
+
+27. When a stack is selected it should show a 
+record of scores doing each session. 
+
+28. The user should be able to select an option
+to return to previous menus.
+
+Components
+-------------------------------------------------
+
+1. Main menu showing options
+
+2. AddStack menu to name a stack to be created,
+should not allow repeated names.
+
+3. A way to create tables for each newly made 
+stack.
+
+4. A way to Connect tables of a stack to a table 
+tracking all stacks.
+
+5. Have a menu to show stacks when DeleteStack
+is selected.
+
+6. AddFlashcard option to show a menu of 
+existing stacks to add a card too. 
+
+7. DeleteFlashcard option should show menu with a
+list of all stacks to delete.
+
+8. StudySession should take the user to a menu
+showing list of stacks to choose from. 
+
+9. Once stack is selected, user should see the 
+cards present with the front text and card number
+and prompt user to answer the front text. 
+
+10. Each card answered should be marked correct
+or incorrect and the score should be counted.
+
+11. ViewSessions should show menu of existing
+stacks to choose from.
+
+12. A selected stack should show that stacks 
+record of sessions and scores.
+
+13. A class to make a card object.
+
+14. A class to make a stack object. 
+
+Tools/Concepts learned
+-------------------------------------------------
+
+
+
+Use Cases
+-------------------------------------------------
+
