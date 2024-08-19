@@ -12,3 +12,4 @@ C:\Users\darl5\OneDrive\Desktop\MicrosoftCertifications\MyProjects\FlashcardApp\
 C:\Users\darl5\OneDrive\Desktop\MicrosoftCertifications\MyProjects\FlashcardApp\obj\Debug\net8.0\FlashcardApp.pdb
 C:\Users\darl5\OneDrive\Desktop\MicrosoftCertifications\MyProjects\FlashcardApp\obj\Debug\net8.0\FlashcardApp.genruntimeconfig.cache
 C:\Users\darl5\OneDrive\Desktop\MicrosoftCertifications\MyProjects\FlashcardApp\obj\Debug\net8.0\ref\FlashcardApp.dll
+C:\Users\darl5\OneDrive\Desktop\MicrosoftCertifications\MyProjects\FlashcardApp\obj\Debug\net8.0\FlashcardApp.sourcelink.json
