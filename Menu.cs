@@ -5,16 +5,19 @@ public class Menu () {
     private string mainMenuSelection = "";
     private int optionSelected = -1;
 
-    private List<Stack> list =new List<Stack>();
-    private StackOperator stackOperator = new StackOperator();
+    // used to hold collections flashcard stacks that hold respective flashcards
+    private SortedSet<Stacks> list = [];
+
+    // used to handle viewing and any changes to flashcard stacks
+    private StackOperator stackOperator = new();
 
     public void StartApp() {
         while (!exitApp) {
             try {
                 MainMenu();
                 mainMenuSelection = Console.ReadLine() ?? "";
-                int.TryParse(mainMenuSelection, out optionSelected);
-
+                _ = int.TryParse(mainMenuSelection, out optionSelected);
+                
                 switch (optionSelected) {
                     case 0:
                         Console.Clear();
@@ -22,21 +25,11 @@ public class Menu () {
                         break;
                     case 1:
                         Console.Clear();
-                        Console.WriteLine("Enter a name: ");
-                        string newStack = Console.ReadLine();
-                        list.Add(new Stack {
-                                Id = 1,
-                                ForeignKey = 2,
-                                Name = newStack
-                            });
-                        Console.WriteLine("Press enter to continue");
-                        Console.ReadLine();
+                        stackOperator.AddStack(list);
                         break;
                     case 2:
                         Console.Clear();
-                        stackOperator.ShowListOfStacks(list);
-                        Console.WriteLine("Press enter to continue");
-                        Console.ReadLine();
+                        stackOperator.DeleteStackFromList(list);
                         break;
                     case 3:
                         Console.Clear();
