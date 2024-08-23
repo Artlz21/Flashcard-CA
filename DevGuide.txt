@@ -109,6 +109,7 @@ Complete!
 
 2. AddStack menu to name a stack to be created,
 should not allow repeated names.
+Complete!
 
 3. A way to create tables for each newly made 
 stack.
@@ -118,6 +119,7 @@ tracking all stacks.
 
 5. Have a menu to show stacks when DeleteStack
 is selected.
+Complete!
 
 6. AddFlashcard option to show a menu of 
 existing stacks to add a card too. 

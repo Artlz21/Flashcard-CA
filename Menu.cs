@@ -11,6 +11,8 @@ public class Menu () {
     // used to handle viewing and any changes to flashcard stacks
     private StackOperator stackOperator = new();
 
+    private CardOperator cardOperator= new();
+
     public void StartApp() {
         while (!exitApp) {
             try {
@@ -33,9 +35,21 @@ public class Menu () {
                         break;
                     case 3:
                         Console.Clear();
-                        Console.WriteLine("Shows table to add card\n");
-                        Console.WriteLine("Press enter to continue");
-                        Console.ReadLine();
+                        string stackName = "";
+
+                        if (list.Count > 0) {
+                            stackOperator.ShowListOfStacks(list);
+                            Console.WriteLine("Enter a stack name to add a card too. ");
+                            stackName = Console.ReadLine() ?? "";
+                        }
+                        else {
+                            Console.WriteLine("No stack of flashcards to add a card exists.");
+                            Console.WriteLine("Press enter to continue");
+                            Console.ReadLine();
+                            break;
+                        }
+
+                        cardOperator.CreateNewCard();
                         break;
                     case 4:
                         Console.Clear();
