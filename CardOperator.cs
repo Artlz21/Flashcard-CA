@@ -2,7 +2,7 @@ namespace FlashcardApp;
 
 public class CardOperator () {
 
-    public void CreateNewCard (SortedSet<Stacks> list, string stackName) {
+    public void CreateNewCard (List<Stacks> list, string stackName) {
         try {
             FlashCard flashcard = new();
             string frontText = "";
@@ -18,10 +18,8 @@ public class CardOperator () {
 
             if (StackToAddCard != null) {
                 flashcard.Id = StackToAddCard.Cards != null ? StackToAddCard.Cards.Count + 1 : flashcard.Id = 1;
-                flashcard.ForeignKey = StackToAddCard.ForeignKey;
                 flashcard.FrontText = frontText;
                 flashcard.BackText = backText;
-                flashcard.CardNumber = flashcard.Id;
 
                 StackToAddCard.Cards = [flashcard];
                 

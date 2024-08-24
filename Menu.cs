@@ -6,7 +6,7 @@ public class Menu () {
     private int optionSelected = -1;
 
     // used to hold collections flashcard stacks that hold respective flashcards
-    private SortedSet<Stacks> list = [];
+    private List<Stacks> list = [];
 
     // used to handle viewing and any changes to flashcard stacks
     private StackOperator stackOperator = new();
@@ -14,6 +14,14 @@ public class Menu () {
     private CardOperator cardOperator = new();
 
     public void StartApp() {
+        FlashCard FirstCard = new FlashCard{ Id = 1, ForeignKey = 1, FrontText = "First", BackText = "First"};
+        FlashCard SecondCard = new FlashCard{ Id = 2, ForeignKey = 1, FrontText = "Second", BackText = "Second"};
+        FlashCard ThirdCard = new FlashCard{ Id = 3, ForeignKey = 1, FrontText = "Third", BackText = "Third"};
+        Stacks First = new() { Id = 1, Name = "First", Cards = [FirstCard, SecondCard, ThirdCard]};
+        Stacks Second = new() { Id = 2, Name = "Second", Cards = []};
+        list.Add(First);
+        list.Add(Second);
+
         while (!exitApp) {
             try {
                 MainMenu();
@@ -27,10 +35,12 @@ public class Menu () {
                         break;
                     case 1:
                         Console.Clear();
+                        ShowListOfStacks(list);
                         stackOperator.AddStack(list);
                         break;
                     case 2:
                         Console.Clear();
+                        ShowListOfStacks(list);
                         stackOperator.DeleteStackFromList(list);
                         break;
                     case 3:
@@ -38,7 +48,7 @@ public class Menu () {
                         string stackName = "";
 
                         if (list.Count > 0) {
-                            stackOperator.ShowListOfStacks(list);
+                            ShowListOfStacks(list);
                             Console.WriteLine("Enter a stack name to add a card too. ");
                             stackName = Console.ReadLine() ?? "";
                         }
@@ -101,5 +111,26 @@ public class Menu () {
             0. Exit
             --------------------------
             """);
+    }
+
+    public void ShowListOfStacks (List<Stacks> list) {
+        try {
+            Console.WriteLine 
+                ("""
+                List of recorded Stacks
+                --------------------------
+                """);
+            if (list != null) {
+                foreach(var stack in list){
+                    Console.WriteLine(stack.Name);
+                }
+            }
+            else {
+                Console.WriteLine("No Stacks of Flashcards currently saved");
+            }
+        }
+        catch (Exception ex) {
+            Console.WriteLine("Error: " + ex.Message); 
+        }
     }
 }
