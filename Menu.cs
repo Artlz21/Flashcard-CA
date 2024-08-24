@@ -11,7 +11,7 @@ public class Menu () {
     // used to handle viewing and any changes to flashcard stacks
     private StackOperator stackOperator = new();
 
-    private CardOperator cardOperator= new();
+    private CardOperator cardOperator = new();
 
     public void StartApp() {
         while (!exitApp) {
@@ -49,7 +49,7 @@ public class Menu () {
                             break;
                         }
 
-                        cardOperator.CreateNewCard();
+                        cardOperator.CreateNewCard(list, stackName);
                         break;
                     case 4:
                         Console.Clear();

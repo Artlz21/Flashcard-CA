@@ -6,6 +6,7 @@ public class StackOperator () {
     private string getNameOfStack = "";
     public void AddStack (SortedSet<Stacks> list) {
         try {
+            int sortedSetSize = list.Count;
             ShowListOfStacks(list);
             Console.WriteLine ("Enter a name for your stack: ");
             getNameOfStack = Console.ReadLine () ?? "";
@@ -14,7 +15,7 @@ public class StackOperator () {
                 Console.WriteLine ("Name already exists or invalid name...");
             }
             else {    
-                Stacks stack= new Stacks{Name = getNameOfStack};
+                Stacks stack= new Stacks{Id = sortedSetSize + 1, ForeignKey = sortedSetSize + 1, Name = getNameOfStack};
                 list.Add(stack);
                 Console.WriteLine($"New stack named {getNameOfStack} added. ");
             }
