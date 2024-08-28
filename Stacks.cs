@@ -3,5 +3,4 @@ namespace FlashcardApp;
 public class Stacks {
     public int Id { get; set; }
     public string Name { get; set; } = "";
-    public List<FlashCard>? Cards { get; set; }
 }
