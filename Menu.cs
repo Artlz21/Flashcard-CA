@@ -21,6 +21,9 @@ public class Menu () {
                 _ = int.TryParse(mainMenuSelection, out int optionSelected);
                 string newStackName = "";
                 string stackToDelete = "";
+                string stackToAddCard = "";
+                string frontText = "";
+                string backText = "";
 
                 switch (optionSelected) {
                     case 0:
@@ -55,7 +58,7 @@ public class Menu () {
                         Console.WriteLine("\nEnter a Stack name to delete: ");
                         stackToDelete = Console.ReadLine() ?? ""; 
 
-                        if (ListOfStacks.Any(stack => stack.Name == stackToDelete)){
+                        if (ListOfStacks.Any(stack => stack.Name == stackToDelete)) {
                             var stack = ListOfStacks.First(stack => stack.Name == stackToDelete);
                             ListOfStacks.Remove(stack);
                             Console.WriteLine($"Stack named {stack.Name} removed");
@@ -72,19 +75,77 @@ public class Menu () {
                         break;
                     case 4:
                         Console.Clear();
+                        if (ListOfStacks.Count == 0) {
+                            Console.WriteLine("No stacks currently recorded...");
+                            Console.WriteLine("\nPress enter to continue");
+                            Console.ReadLine();
+                            break;
+                        }
 
+                        ShowListOfStacks(ListOfStacks);
+                        stackToAddCard = Console.ReadLine() ?? "";
+                        if (stackToAddCard == "" || !ListOfStacks.Any(stack => stack.Name == stackToAddCard)) {
+                            Console.WriteLine("Please enter a valid stack name...");
+                            Console.WriteLine("\nPress enter to continue");
+                            Console.ReadLine();
+                            break;                     
+                        }
+
+                        var selectedStack = ListOfStacks.First(stack => stack.Name == stackToAddCard);
+                        Console.Clear();
+                        foreach(var card in ListOfFlashCards) {
+                            if (card.StackID == selectedStack.Id)
+                                Console.WriteLine($"{card.Id}. {card.FrontText}");
+                        }
+
+                        Console.WriteLine("\nEnter the Front text of card");
+                        frontText = Console.ReadLine() ?? "";
+                        if(frontText == "") {
+                            Console.WriteLine("Please enter a front text");
+                            Console.WriteLine("\nPress enter to continue");
+                            Console.ReadLine();
+                            break;
+                        }
+
+                        Console.WriteLine("\nEnter the Back text of card");
+                        backText = Console.ReadLine() ?? "";
+                        if(backText == "") {
+                            Console.WriteLine("Please enter a back text");
+                            Console.WriteLine("\nPress enter to continue");
+                            Console.ReadLine();
+                            break;
+                        }
+
+                        int count = 0;
+                        foreach(var card in ListOfFlashCards) {
+                            if (card.StackID == selectedStack.Id)
+                                count++;                            
+                        }
+
+                        FlashCard flashCard = new() { Id = count += 1, StackID = selectedStack.Id, FrontText = frontText, BackText = backText };
+                        ListOfFlashCards.Add(flashCard);
+                        Console.WriteLine("Flashcard added to stack");
+
+                        Console.WriteLine("\nPress enter to continue");
+                        Console.ReadLine();
                         break;
                     case 5:
                         Console.Clear();
 
+                        Console.WriteLine("\nPress enter to continue");
+                        Console.ReadLine();
                         break;
                     case 6:
                         Console.Clear();
 
+                        Console.WriteLine("\nPress enter to continue");
+                        Console.ReadLine();
                         break;
                     case 7:
                         Console.Clear();
 
+                        Console.WriteLine("\nPress enter to continue");
+                        Console.ReadLine();
                         break;
                     default:
                         Console.WriteLine("\nPlease select an option from menu.");
