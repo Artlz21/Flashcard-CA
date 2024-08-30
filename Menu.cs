@@ -1,10 +1,10 @@
 namespace FlashcardApp; 
 public class Menu () {
     public void StartApp() {
-        FlashCard FirstCard = new() { Id = 1, StackID = 1, FrontText = "First", BackText = "First"};
-        FlashCard SecondCard = new() { Id = 2, StackID = 1, FrontText = "Second", BackText = "Second"};
-        FlashCard ThirdCard = new() { Id = 3, StackID = 1, FrontText = "Third", BackText = "Third"};
-        FlashCard FourthCard = new() { Id = 4, StackID = 2, FrontText = "Fourth", BackText = "Fourth"};
+        FlashCard FirstCard = new() { Id = 1, StackID = 1, CardNumber = 1, FrontText = "First", BackText = "First"};
+        FlashCard SecondCard = new() { Id = 2, StackID = 1, CardNumber = 2, FrontText = "Second", BackText = "Second"};
+        FlashCard ThirdCard = new() { Id = 3, StackID = 1, CardNumber = 3, FrontText = "Third", BackText = "Third"};
+        FlashCard FourthCard = new() { Id = 4, StackID = 2, CardNumber = 1, FrontText = "Fourth", BackText = "Fourth"};
         Stacks First = new() { Id = 1, Name = "First" };
         Stacks Second = new() { Id = 2, Name = "Second" };
         Stacks Third = new() { Id = 3, Name = "Third" };
@@ -25,6 +25,7 @@ public class Menu () {
                 string stackToDeleteCard = "";
                 string frontText = "";
                 string backText = "";
+                int cardNumber = 0;
                 Stacks? stack; 
                 List<FlashCard> flashcardsBelongingToStack;
 
@@ -104,7 +105,7 @@ public class Menu () {
                         foreach(var card in ListOfFlashCards) {
                             if (card.StackID == stack.Id)
                                 flashcardsBelongingToStack.Add(card);
-                                Console.WriteLine($"{card.Id}. {card.FrontText}");
+                                Console.WriteLine($"{card.CardNumber}. {card.FrontText}");
                         }
 
                         Console.WriteLine("\nEnter the Front text of card");
@@ -125,7 +126,7 @@ public class Menu () {
                             break;
                         }
 
-                        FlashCard flashCard = new() { Id = flashcardsBelongingToStack.Count + 1, StackID = stack.Id, FrontText = frontText, BackText = backText };
+                        FlashCard flashCard = new() { Id = flashcardsBelongingToStack.Count + 1, StackID = stack.Id, CardNumber = flashcardsBelongingToStack.Count + 1, FrontText = frontText, BackText = backText };
                         ListOfFlashCards.Add(flashCard);
                         Console.WriteLine("Flashcard added to stack");
 
@@ -143,21 +144,32 @@ public class Menu () {
 
                         ShowListOfStacks(ListOfStacks);
                         stackToDeleteCard = Console.ReadLine() ?? "";
-                        if (stackToAddCard == "" || !ListOfStacks.Any(stack => stack.Name == stackToAddCard)) {
+                        if (stackToDeleteCard == "" || !ListOfStacks.Any(stack => stack.Name == stackToDeleteCard)) {
                             Console.WriteLine("Please enter a valid stack name...");
                             Console.WriteLine("\nPress enter to continue");
                             Console.ReadLine();
                             break;                     
                         }
 
-                        stack = ListOfStacks.First(stack => stack.Name == stackToAddCard);
+                        stack = ListOfStacks.First(stack => stack.Name == stackToDeleteCard);
                         Console.Clear();
                         flashcardsBelongingToStack = [];
                         foreach(var card in ListOfFlashCards) {
                             if (card.StackID == stack.Id)
                                 flashcardsBelongingToStack.Add(card);
-                                Console.WriteLine($"{card.Id}. {card.FrontText}");
+                                Console.WriteLine($"{card.CardNumber}. {card.FrontText}");
                         }
+
+                        Console.WriteLine("Enter the card number to select a card");
+                        _ = int.TryParse(Console.ReadLine() ?? "", out cardNumber);
+                        if (cardNumber == 0) {
+                            Console.WriteLine("Please enter a valid number...");
+                            Console.WriteLine("\nPress enter to continue");
+                            Console.ReadLine();
+                            break;
+                        }
+
+                        
 
                         Console.WriteLine("\nPress enter to continue");
                         Console.ReadLine();
