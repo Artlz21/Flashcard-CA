@@ -26,6 +26,7 @@ public class Menu () {
                 string frontText = "";
                 string backText = "";
                 int cardNumber = 0;
+                FlashCard? flashcardToDelete;
                 Stacks? stack; 
                 List<FlashCard> flashcardsBelongingToStack;
 
@@ -155,13 +156,14 @@ public class Menu () {
                         Console.Clear();
                         flashcardsBelongingToStack = [];
                         foreach(var card in ListOfFlashCards) {
-                            if (card.StackID == stack.Id)
+                            if (card.StackID == stack.Id) {
                                 flashcardsBelongingToStack.Add(card);
                                 Console.WriteLine($"{card.CardNumber}. {card.FrontText}");
+                            }
                         }
 
                         Console.WriteLine("Enter the card number to select a card");
-                        _ = int.TryParse(Console.ReadLine() ?? "", out cardNumber);
+                        _ = int.TryParse(Console.ReadLine(), out cardNumber);
                         if (cardNumber == 0) {
                             Console.WriteLine("Please enter a valid number...");
                             Console.WriteLine("\nPress enter to continue");
@@ -169,7 +171,15 @@ public class Menu () {
                             break;
                         }
 
-                        
+                        flashcardToDelete = flashcardsBelongingToStack.FirstOrDefault(card => card.CardNumber == cardNumber);
+
+                        if (flashcardToDelete != null) {
+                            ListOfFlashCards.Remove(flashcardToDelete);
+                            Console.WriteLine($"Flashcard with ID {flashcardToDelete.Id} has been removed.");
+                        } 
+                        else {
+                            Console.WriteLine("Card not found. Please enter a valid card number.");
+                        }
 
                         Console.WriteLine("\nPress enter to continue");
                         Console.ReadLine();
