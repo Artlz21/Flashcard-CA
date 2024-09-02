@@ -23,9 +23,13 @@ public class Menu () {
                 string stackToDelete = "";
                 string stackToAddCard = "";
                 string stackToDeleteCard = "";
+                string stackToSelect = ""; 
                 string frontText = "";
                 string backText = "";
+                string answer = "";
                 int cardNumber = 0;
+                int correct = 0;
+                int total = 0;
                 FlashCard? flashcardToDelete;
                 Stacks? stack; 
                 List<FlashCard> flashcardsBelongingToStack;
@@ -186,6 +190,48 @@ public class Menu () {
                         break;
                     case 6:
                         Console.Clear();
+                        if (ListOfStacks.Count == 0) {
+                            Console.WriteLine("No stacks currently recorded...");
+                            Console.WriteLine("\nPress enter to continue");
+                            Console.ReadLine();
+                            break;
+                        }
+
+                        ShowListOfStacks(ListOfStacks);
+                        stackToSelect = Console.ReadLine() ?? "";
+                        if (stackToSelect == "" || !ListOfStacks.Any(stack => stack.Name == stackToSelect)) {
+                            Console.WriteLine("Please enter a valid stack name...");
+                            Console.WriteLine("\nPress enter to continue");
+                            Console.ReadLine();
+                            break;                     
+                        }
+
+                        stack = ListOfStacks.First(stack => stack.Name == stackToSelect);
+                        flashcardsBelongingToStack = [];
+                        foreach (var card in ListOfFlashCards) {
+                            if (card.StackID == stack.Id) {
+                                flashcardsBelongingToStack.Add(card);
+                            }
+                        }
+
+                        Console.Clear();
+                        foreach (var card in flashcardsBelongingToStack) {
+                            Console.WriteLine(card.FrontText);
+                            answer = Console.ReadLine() ?? "";
+
+                            if (answer == card.BackText) {
+                                card.Marker = true;
+                            }
+                            else {
+                                card.Marker = false;
+                            }
+                            Console.Clear();
+                        }
+
+                        total = flashcardsBelongingToStack.Count;
+                        correct = flashcardsBelongingToStack.Count(card => card.Marker == true);
+                        
+                        Console.WriteLine($"You got {correct} out of {total}");
 
                         Console.WriteLine("\nPress enter to continue");
                         Console.ReadLine();
