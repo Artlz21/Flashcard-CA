@@ -34,4 +34,15 @@ public class StackManager () {
         ListOfStacks.Remove(stack);
         Console.WriteLine($"Stack named {stack.Name} and all Cards removed");
     }
+
+    public void ShowRecord(FlashcardStack stack) {
+        Console.Clear();
+        int count = 1;
+
+        Console.WriteLine($"Record for {stack.Name}");
+        foreach (var record in stack.Records) {
+            Console.WriteLine($"{count}. Date: {record.DateAndTime}, Score: {record.Correct} / {record.Total}");
+            count+=1;
+        }
+    }
 }

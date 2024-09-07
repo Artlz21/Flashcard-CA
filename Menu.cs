@@ -16,23 +16,14 @@ public class Menu () {
 
         List<FlashcardStack> ListOfStacks = [First, Second, Third];
         List<FlashCard> ListOfFlashCards = [FirstCard, SecondCard, ThirdCard, FourthCard ];
+
+        FlashcardStack? stack; 
+        List<FlashCard> flashcardsBelongingToStack;
         
         // Condition and loop keeping app running 
         bool exitApp = false;
         while (!exitApp) {
             try {
-                string stackToDeleteCard = "";
-                string stackToSelect = ""; 
-                string frontText = "";
-                string backText = "";
-                string answer = "";
-                int cardNumber = 0;
-                int correct = 0;
-                int total = 0;
-                FlashCard? flashcardToDelete;
-                FlashcardStack? stack; 
-                List<FlashCard> flashcardsBelongingToStack;
-
                 // Main menu user sees and selects option at
                 MainMenu();
                 string mainMenuSelection = Console.ReadLine() ?? "";
@@ -50,7 +41,7 @@ public class Menu () {
                         ShowListOfStacks(ListOfStacks);
                         stackManager.AddNewStack(ListOfStacks);
 
-                        Console.WriteLine("\nPress enter to continue");
+                        Console.WriteLine("Press enter to continue");
                         Console.ReadLine();
                         break;
                     // Deletes an existing stack from list
@@ -61,8 +52,8 @@ public class Menu () {
                         Console.WriteLine("\nEnter a Stack name to delete: ");
                         stack = stackManager.GetSelectedStack(ListOfStacks);
                         if (stack == null) {
-                            Console.WriteLine("Could not find stack...");
-                            Console.WriteLine("\nPress enter to continue");
+                            Console.WriteLine("\nCould not find stack...");
+                            Console.WriteLine("Press enter to continue");
                             Console.ReadLine();
                             break;
                         }
@@ -80,95 +71,69 @@ public class Menu () {
                         Console.ReadLine();
                         break;
                     // Adds a new card to existing stack
-                    case 4:                        
+                    case 4:            
+                        // Check if list of stacks is not empty            
                         if (CheckListIsFilled(ListOfStacks)) break;
 
+                        // Show list of stacks for user to select one to add card too
                         ShowListOfStacks(ListOfStacks);
                         stack = stackManager.GetSelectedStack(ListOfStacks);
                         if (stack == null) {
-                            Console.WriteLine("Could not find stack...");
-                            Console.WriteLine("\nPress enter to continue");
+                            Console.WriteLine("\nCould not find stack...");
+                            Console.WriteLine("Press enter to continue");
                             Console.ReadLine();
                             break;
                         }
 
+                        // Gets all cards belonging to selected stack clears screen and shows as a list
                         Console.Clear();
                         flashcardsBelongingToStack = cardManager.GetCardsBelongingToStack(stack, ListOfFlashCards);
                         foreach(var card in flashcardsBelongingToStack) {
                             Console.WriteLine($"{card.CardNumber}. {card.FrontText}");
                         }
 
-                        Console.WriteLine("\nEnter the Front text of card");
-                        frontText = Console.ReadLine() ?? "";
-                        if(frontText == "") {
-                            Console.WriteLine("Please enter a front text");
-                            Console.WriteLine("\nPress enter to continue");
+                        // Prompts user to add front and back side of a new card
+                        FlashCard? flashCard = cardManager.CreateNewCard(flashcardsBelongingToStack, stack);
+
+                        if (flashCard == null) {
+                            Console.WriteLine("\nCard was not added...");
+                            Console.WriteLine("Press enter to continue");
                             Console.ReadLine();
                             break;
                         }
 
-                        Console.WriteLine("\nEnter the Back text of card");
-                        backText = Console.ReadLine() ?? "";
-                        if(backText == "") {
-                            Console.WriteLine("Please enter a back text");
-                            Console.WriteLine("\nPress enter to continue");
-                            Console.ReadLine();
-                            break;
-                        }
-
-                        FlashCard flashCard = new() { Id = flashcardsBelongingToStack.Count + 1, StackID = stack.Id, CardNumber = flashcardsBelongingToStack.Count + 1, FrontText = frontText, BackText = backText };
+                        // Create new flashcard object using front and back text and other components and add to list of cards
                         ListOfFlashCards.Add(flashCard);
-                        Console.WriteLine("Flashcard added to stack");
-
-                        Console.WriteLine("\nPress enter to continue");
+                        Console.WriteLine("\nFlashcard added to stack");
+                        Console.WriteLine("Press enter to continue");
                         Console.ReadLine();
                         break;
                     // Deletes a card from an existing stack
                     case 5:
-                        Console.Clear();
-                        if (ListOfStacks.Count == 0) {
-                            Console.WriteLine("No stacks currently recorded...");
-                            Console.WriteLine("\nPress enter to continue");
-                            Console.ReadLine();
-                            break;
-                        }
+                        // Check if list of stacks is not empty            
+                        if (CheckListIsFilled(ListOfStacks)) break;
 
+                        // Show list of stacks for user to select one to add card too
                         ShowListOfStacks(ListOfStacks);
-                        stackToDeleteCard = Console.ReadLine() ?? "";
-                        if (stackToDeleteCard == "" || !ListOfStacks.Any(stack => stack.Name == stackToDeleteCard)) {
-                            Console.WriteLine("Please enter a valid stack name...");
-                            Console.WriteLine("\nPress enter to continue");
-                            Console.ReadLine();
-                            break;                     
-                        }
-
-                        stack = ListOfStacks.First(stack => stack.Name == stackToDeleteCard);
-                        Console.Clear();
-                        flashcardsBelongingToStack = [];
-                        foreach(var card in ListOfFlashCards) {
-                            if (card.StackID == stack.Id) {
-                                flashcardsBelongingToStack.Add(card);
-                                Console.WriteLine($"{card.CardNumber}. {card.FrontText}");
-                            }
-                        }
-
-                        Console.WriteLine("Enter the card number to select a card");
-                        _ = int.TryParse(Console.ReadLine(), out cardNumber);
-                        if (cardNumber == 0) {
-                            Console.WriteLine("Please enter a valid number...");
-                            Console.WriteLine("\nPress enter to continue");
+                        stack = stackManager.GetSelectedStack(ListOfStacks);
+                        if (stack == null) {
+                            Console.WriteLine("\nCould not find stack...");
+                            Console.WriteLine("Press enter to continue");
                             Console.ReadLine();
                             break;
                         }
 
-                        flashcardToDelete = flashcardsBelongingToStack.FirstOrDefault(card => card.CardNumber == cardNumber);
+                        // Gets all cards belonging to selected stack clears screen and shows as a list
+                        Console.Clear();
+                        flashcardsBelongingToStack = cardManager.GetCardsBelongingToStack(stack, ListOfFlashCards);
+                        foreach(var card in flashcardsBelongingToStack) {
+                            Console.WriteLine($"{card.CardNumber}. {card.FrontText}");
+                        }
 
-                        if (flashcardToDelete != null) {
-                            ListOfFlashCards.Remove(flashcardToDelete);
-                            Console.WriteLine($"Flashcard with ID {flashcardToDelete.Id} has been removed.");
-                        } 
-                        else {
-                            Console.WriteLine("Card not found. Please enter a valid card number.");
+                        if (!cardManager.DeleteFlashcard(flashcardsBelongingToStack, ListOfFlashCards)) {
+                            Console.WriteLine("\nPress enter to continue");
+                            Console.ReadLine();
+                            break;
                         }
 
                         Console.WriteLine("\nPress enter to continue");
@@ -176,89 +141,43 @@ public class Menu () {
                         break;
                     // Starts a quiz with cards from a selected stack
                     case 6:
-                        Console.Clear();
-                        if (ListOfStacks.Count == 0) {
-                            Console.WriteLine("No stacks currently recorded...");
-                            Console.WriteLine("\nPress enter to continue");
+                        // Check if list of stacks is not empty            
+                        if (CheckListIsFilled(ListOfStacks)) break;
+
+                        // Show list of stacks for user to select one to add card too
+                        ShowListOfStacks(ListOfStacks);
+                        stack = stackManager.GetSelectedStack(ListOfStacks);
+                        if (stack == null) {
+                            Console.WriteLine("\nCould not find stack...");
+                            Console.WriteLine("Press enter to continue");
                             Console.ReadLine();
                             break;
                         }
 
-                        ShowListOfStacks(ListOfStacks);
-                        stackToSelect = Console.ReadLine() ?? "";
-                        if (stackToSelect == "" || !ListOfStacks.Any(stack => stack.Name == stackToSelect)) {
-                            Console.WriteLine("Please enter a valid stack name...");
-                            Console.WriteLine("\nPress enter to continue");
-                            Console.ReadLine();
-                            break;                     
-                        }
+                        // Retrieve all cards belonging to selected stack
+                        flashcardsBelongingToStack = cardManager.GetCardsBelongingToStack(stack, ListOfFlashCards);
 
-                        stack = ListOfStacks.First(stack => stack.Name == stackToSelect);
-                        flashcardsBelongingToStack = [];
-                        foreach (var card in ListOfFlashCards) {
-                            if (card.StackID == stack.Id) {
-                                flashcardsBelongingToStack.Add(card);
-                            }
-                        }
-
-                        Console.Clear();
-                        foreach (var card in flashcardsBelongingToStack) {
-                            Console.WriteLine(card.FrontText);
-                            answer = Console.ReadLine() ?? "";
-
-                            if (answer == card.BackText) {
-                                card.Marker = true;
-                            }
-                            else {
-                                card.Marker = false;
-                            }
-                            Console.Clear();
-                        }
-
-                        total = flashcardsBelongingToStack.Count;
-                        correct = flashcardsBelongingToStack.Count(card => card.Marker == true);
-                        DateTime dateTime = DateTime.Now;
-
-                        stack.Records.Add(new Record { Correct = correct, Total = total, DateAndTime = dateTime});
-
-                        Console.WriteLine($"You got {correct} out of {total}");
+                        cardManager.StartQuiz(flashcardsBelongingToStack, stack);
 
                         Console.WriteLine("\nPress enter to continue");
                         Console.ReadLine();
                         break;
                     // Shows record of scores from selected stack
                     case 7:
-                        Console.Clear();
-                        if (ListOfStacks.Count == 0) {
-                            Console.WriteLine("No stacks currently recorded...");
-                            Console.WriteLine("\nPress enter to continue");
+                        // Check if list of stacks is not empty            
+                        if (CheckListIsFilled(ListOfStacks)) break;
+
+                        // Show list of stacks for user to select one to add card too
+                        ShowListOfStacks(ListOfStacks);
+                        stack = stackManager.GetSelectedStack(ListOfStacks);
+                        if (stack == null) {
+                            Console.WriteLine("\nCould not find stack...");
+                            Console.WriteLine("Press enter to continue");
                             Console.ReadLine();
                             break;
                         }
 
-                        ShowListOfStacks(ListOfStacks);
-                        stackToSelect = Console.ReadLine() ?? "";
-                        if (stackToSelect == "" || !ListOfStacks.Any(stack => stack.Name == stackToSelect)) {
-                            Console.WriteLine("Please enter a valid stack name...");
-                            Console.WriteLine("\nPress enter to continue");
-                            Console.ReadLine();
-                            break;                     
-                        }
-
-                        stack = ListOfStacks.First(stack => stack.Name == stackToSelect);
-                        if (stack.Records == null) {
-                            Console.WriteLine("Please enter a valid stack name...");
-                            Console.WriteLine("\nPress enter to continue");
-                            Console.ReadLine();
-                            break; 
-                        }
-
-                        Console.Clear();
-                        foreach (var record in stack.Records) {
-                            int count = 1;
-                            Console.WriteLine($"Record for {stack.Name}");
-                            Console.WriteLine($"{count}. Date: {record.DateAndTime}, Score: {record.Correct} / {record.Total}");
-                        }
+                        stackManager.ShowRecord(stack);
 
                         Console.WriteLine("\nPress enter to continue");
                         Console.ReadLine();
@@ -321,11 +240,13 @@ public class Menu () {
 
     private bool CheckListIsFilled(List<FlashcardStack> list) {
         Console.Clear();
-        if (list.Count > 0 || list != null) return false;
+        if (list.Count == 0 || list == null) {
+            Console.WriteLine("No stacks currently recorded...");
+            Console.WriteLine("\nPress enter to continue");
+            Console.ReadLine();
+            return true;
+        }
 
-        Console.WriteLine("No stacks currently recorded...");
-        Console.WriteLine("\nPress enter to continue");
-        Console.ReadLine();
-        return true;
+        return false;
     }
 }
