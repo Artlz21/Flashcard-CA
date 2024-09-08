@@ -8,9 +8,12 @@ public class StackManager () {
         Console.WriteLine("\nEnter a new Stack name: ");
         string newStackName = Console.ReadLine() ?? ""; 
 
+        bool checkIfNameIsRepeated = ListOfStacks.Any(stack => stack.Name == newStackName);
+
         // Checks if user input is valid
-        if (newStackName == "" || newStackName == null) 
-            Console.WriteLine("Enter a valid name");
+        if (string.IsNullOrEmpty(newStackName) || checkIfNameIsRepeated) {
+            Console.WriteLine("Enter a valid name and unique name");
+        }
         else {
             FlashcardStack NewStack = new() { Id = ListOfStacks.Count + 1, Name = newStackName, Records = [] };
             ListOfStacks.Add(NewStack);
