@@ -2,6 +2,10 @@ using System.Linq;
 
 namespace FlashcardApp;
 
+/*
+Need to work on changing each use of stack objects to align more with the new DTO design that shoud be 
+used for business logic.
+*/
 public class StackManager () {
     // Creates new stacks to hold flashcards and add to list of existing stacks
     public void AddNewStack (List<FlashcardStack> ListOfStacks) {
@@ -15,7 +19,7 @@ public class StackManager () {
             Console.WriteLine("Enter a valid name and unique name");
         }
         else {
-            FlashcardStack NewStack = new() { Id = ListOfStacks.Count + 1, Name = newStackName, Records = [] };
+            FlashcardStack NewStack = new() { Id = ListOfStacks.Count + 1, Name = newStackName };
             ListOfStacks.Add(NewStack);
             Console.WriteLine($"Stack named {newStackName} added.");
         }
@@ -44,7 +48,7 @@ public class StackManager () {
 
         Console.WriteLine($"Record for {stack.Name}");
         foreach (var record in stack.Records) {
-            Console.WriteLine($"{count}. Date: {record.DateAndTime}, Score: {record.Correct} / {record.Total}");
+            Console.WriteLine($"{count}.) Date: {record.DateAndTime}, Score: {record.Correct} / {record.Total}");
             count+=1;
         }
     }

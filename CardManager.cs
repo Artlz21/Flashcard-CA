@@ -1,5 +1,8 @@
 namespace FlashcardApp;
 
+/*
+Need to rework to use new DTO design for better practice to include business logic. 
+*/
 public class CardManager () {
     public List<FlashCard> GetCardsBelongingToStack(FlashcardStack stack, List<FlashCard> list) {
         List<FlashCard> ListOfCards = [];
@@ -45,7 +48,14 @@ public class CardManager () {
 
         if (flashcardToDelete != null) {
             ListOfFlashCards.Remove(flashcardToDelete);
+            flashcardsBelongingToStack.Remove(flashcardToDelete);
             Console.WriteLine($"Flashcard with ID {flashcardToDelete.Id} has been removed.");
+
+            int count = 1;
+            foreach (var card in flashcardsBelongingToStack) {
+                card.CardNumber = count;
+                count++;
+            }
             return true;
         } 
         else {
@@ -73,7 +83,7 @@ public class CardManager () {
         int correct = flashcardsBelongingToStack.Count(card => card.Marker == true);
         DateTime dateTime = DateTime.Now;
 
-        stack.Records.Add(new Record { Correct = correct, Total = total, DateAndTime = dateTime});
+        stack.AddNewRecord(new Record(correct, total, dateTime));
 
         Console.WriteLine($"You got {correct} out of {total}");
 
