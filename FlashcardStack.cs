@@ -8,16 +8,23 @@ public class FlashcardStack {
 public class FlashcardStackDTO {
     public required string Name { get; set; }
     public List<FlashCardDTO> Flashcards { get; set; } = new();
-    public RecordDTO? Records { get; set; }
+    public List<RecordDTO> Records { get; set; } = new();
     public int NumberOfCards => Flashcards.Count;
 }
 
 public class FlashcardStackMapper {
-    public FlashcardStackDTO flashcardStackDTOMapper(FlashcardStack flashcardStack, List<FlashCardDTO> flashCards, RecordDTO record) {
+    public FlashcardStackDTO FlashcardStackDTOMapper(FlashcardStack flashcardStack, List<FlashCardDTO> flashCards, List<RecordDTO> record) {
         return new FlashcardStackDTO {
             Name = flashcardStack.Name,
             Flashcards = flashCards,
             Records = record
+        };
+    }
+
+    public FlashcardStackDTO FlashcardStackDTOMapper(FlashcardStack flashcardStack, List<FlashCardDTO> flashCards) {
+        return new FlashcardStackDTO {
+            Name = flashcardStack.Name,
+            Flashcards = flashCards,
         };
     }
 }

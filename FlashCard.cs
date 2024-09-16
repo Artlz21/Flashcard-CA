@@ -1,29 +1,26 @@
 namespace FlashcardApp;
 
-public class FlashCard {
+public class Flashcard {
     public int Id { get; set; }
     public int StackID { get; set; }
-    public int CardNumber { get; set; }
     public string FrontText { get; set; } = "";
     public string BackText { get; set; } = "";
     public bool? Marker { get; set; } = null;
 }
 
 public class FlashCardDTO {
-    public int Number { get; set; }
     public string FrontText { get; set; } = "";
     public string BackText { get; set;} = "";
     public bool? Marker { get; set; } = null;
 }
 
 public class FlashCardMapper {
-    public List<FlashCardDTO> FlashCardDTOMapper(List<FlashCard> flashCards) {
+    public List<FlashCardDTO> FlashCardDTOMapper(List<Flashcard> flashCards) {
         List<FlashCardDTO> flashCardDTOList = new();
         
-        int count = 1;
         foreach (var flashCard in flashCards) {
             FlashCardDTO flashCardDTO = new FlashCardDTO { 
-                Number = count, FrontText = flashCard.FrontText, BackText = flashCard.BackText, Marker = null
+                FrontText = flashCard.FrontText, BackText = flashCard.BackText, Marker = null
             };
             flashCardDTOList.Add(flashCardDTO);
         }
@@ -31,9 +28,9 @@ public class FlashCardMapper {
         return flashCardDTOList;
     }
 
-    public FlashCardDTO FlashCardDTOMapper(FlashCard flashCard) {
+    public FlashCardDTO FlashCardDTOMapper(Flashcard flashCard) {
         return new FlashCardDTO { 
-            Number = flashCard.CardNumber, FrontText = flashCard.FrontText, BackText = flashCard.BackText 
+            FrontText = flashCard.FrontText, BackText = flashCard.BackText 
         };
     }
 }
