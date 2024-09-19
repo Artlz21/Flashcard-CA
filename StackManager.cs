@@ -1,11 +1,6 @@
 using System.Linq;
 
 namespace FlashcardApp;
-
-/*
-Need to work on changing each use of stack objects to align more with the new DTO design that shoud be 
-used for business logic.
-*/
 public class StackManager () {
     // Creates new stacks to hold flashcards and add to list of existing stacks
     public void AddNewStack (List<FlashcardStackDTO> ListOfStacks) {

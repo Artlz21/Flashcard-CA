@@ -4,8 +4,11 @@ class Program
 {
     static void Main(string[] args)
     {
-        Menu menu= new Menu();
+        DatabaseManager databaseManager = new("Server=(localdb)\\FlashcardDB;Database=FlashcardDB;Trusted_Connection=True;");
+        databaseManager.FlashcardStackGet("Second");
 
-        menu.StartApp();
+        // Menu menu= new Menu();
+
+        // menu.StartApp();
     }
 }

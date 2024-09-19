@@ -1,8 +1,6 @@
 namespace FlashcardApp;
 
-/*
-Need to rework to use new DTO design for better practice to include business logic. 
-*/
+
 public class CardManager () {
     public List<FlashCardDTO> GetCardsBelongingToStack(FlashcardStackDTO stack) {
         List<FlashCardDTO> ListOfCards = [];
