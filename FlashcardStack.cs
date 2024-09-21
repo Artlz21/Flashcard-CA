@@ -1,7 +1,7 @@
 namespace FlashcardApp;
 
 public class FlashcardStack {
-    public int Id { get; set; }
+    public int ID { get; set; }
     public string Name { get; set; } = "";
 }
 
@@ -30,7 +30,7 @@ public class FlashcardStackMapper {
 }
 
 public class Record {
-    public int Id { get; set; } 
+    public int ID { get; set; } 
     public int StackID { get; set; }
     public int Total { get; set; }
     public int Correct { get; set; }

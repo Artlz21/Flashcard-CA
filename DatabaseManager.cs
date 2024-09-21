@@ -9,12 +9,6 @@ namespace FlashcardApp {
             ConnectionString = connection;
         }
 
-        public void ConnectToDatabase() {
-            using var connection = new SqlConnection(ConnectionString);
-                connection.Open();
-                Console.WriteLine("DB Connected successfully");
-        }
-
         public List<FlashcardStack>? FlashcardStackGetAll() {
             List<FlashcardStack> FlashcardStackList = new();
             
@@ -27,7 +21,7 @@ namespace FlashcardApp {
                         while (reader.Read())
                         {
                             FlashcardStack flashcardStack = new();
-                            flashcardStack.Id = (int)reader["ID"];
+                            flashcardStack.ID = (int)reader["ID"];
                             flashcardStack.Name = (string)reader["StackName"];     
                             FlashcardStackList.Add(flashcardStack);                  
                         }
@@ -51,7 +45,7 @@ namespace FlashcardApp {
 
                     using SqlDataReader reader = cmd.ExecuteReader();
                         while (reader.Read()) {
-                            flashcardStack.Id = (int)reader["ID"];
+                            flashcardStack.ID = (int)reader["ID"];
                             flashcardStack.Name = (string)reader["StackName"];
                         }
             
@@ -100,9 +94,213 @@ namespace FlashcardApp {
 
                 using var cmd = new SqlCommand(query, connection);
                     cmd.Parameters.Add(new SqlParameter("@StackName", flashcardStack.Name));
-                    cmd.Parameters.Add(new SqlParameter("@ID", flashcardStack.Id));
+                    cmd.Parameters.Add(new SqlParameter("@ID", flashcardStack.ID));
                     cmd.ExecuteNonQuery();
                     Console.WriteLine("Stack updated");
+        }
+
+        public List<Record>? RecordsGetAll() {
+            List<Record> RecordList = new();
+            
+            using var connection = new SqlConnection(ConnectionString);
+                string query = "SELECT * FROM Records";
+                connection.Open();
+
+                using var cmd = new SqlCommand(query, connection);
+                    using SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Record record = new();
+                            record.ID = (int)reader["ID"];
+                            record.StackID = (int)reader["StackID"];     
+                            record.Total = (int)reader["Total"];      
+                            record.Correct = (int)reader["Correct"];
+                            record.DateAndTime = (DateTime)reader["DateAndTime"];
+                            RecordList.Add(record);      
+                        }
+            
+            return RecordList;
+        }
+
+        public Record? RecordGet(string recordID) {
+            Record record = new();
+
+            using var connection = new SqlConnection(ConnectionString);
+                string query = 
+                """
+                SELECT * FROM Records
+                WHERE ID = @recordID
+                """;
+                connection.Open();
+
+                using var cmd = new SqlCommand(query, connection);                
+                    cmd.Parameters.Add(new SqlParameter("@recordID", recordID));
+
+                    using SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read()) {
+                            record.ID = (int)reader["ID"];
+                            record.StackID = (int)reader["StackID"];     
+                            record.Total = (int)reader["Total"];      
+                            record.Correct = (int)reader["Correct"];
+                            record.DateAndTime = (DateTime)reader["DateAndTime"];
+                        }
+            
+            return record;
+        }
+
+        public void RecordPost(Record record) {
+            using var connection = new SqlConnection(ConnectionString);
+                string query = 
+                """
+                INSERT INTO Records (StackID, Correct, Total, DateAndTime)
+                VALUES (@StackID, @Correct, @Total, @DateAndTime)
+                """;
+                connection.Open();
+
+                using var cmd = new SqlCommand(query, connection);
+                    cmd.Parameters.Add(new SqlParameter("@StackID", record.StackID));
+                    cmd.Parameters.Add(new SqlParameter("@Correct", record.Correct));
+                    cmd.Parameters.Add(new SqlParameter("@Total", record.Total));
+                    cmd.Parameters.Add(new SqlParameter("@DateAndTime", record.DateAndTime));
+                    cmd.ExecuteNonQuery();
+                    Console.WriteLine("Record added.");
+        }
+
+        public void RecordUpdate(Record record) {
+            using var connection = new SqlConnection(ConnectionString);
+                string query = 
+                """
+                UPDATE Records
+                SET StackID = @StackID, Correct = @Correct,
+                Total = @Total, DateAndTime = @DateAndTime
+                WHERE ID = @ ID
+                """;
+                connection.Open();
+
+                using var cmd = new SqlCommand(query, connection);
+                    cmd.Parameters.Add(new SqlParameter("@StackID", record.StackID));
+                    cmd.Parameters.Add(new SqlParameter("@Correct", record.Correct));
+                    cmd.Parameters.Add(new SqlParameter("@Total", record.Total));
+                    cmd.Parameters.Add(new SqlParameter("@DateAndTime", record.DateAndTime));
+                    cmd.ExecuteNonQuery();
+                    Console.WriteLine("Record Updated.");
+        }
+
+        public void RecordDelete(Record record) {
+            using var connection = new SqlConnection(ConnectionString);
+                string query = 
+                """
+                DELETE FROM Records 
+                WHERE ID = @ID
+                """;
+                connection.Open();
+
+                using var cmd = new SqlCommand(query, connection);
+                    cmd.Parameters.Add(new SqlParameter("@ID", record.ID));
+                    cmd.ExecuteNonQuery();
+                    Console.WriteLine("Record Deleted.");
+        }
+
+        public List<Flashcard>? FlashcardGetAll() {
+            List<Flashcard> FlashcardList = new();
+            
+            using var connection = new SqlConnection(ConnectionString);
+                string query = "SELECT * FROM Flashcard";
+                connection.Open();
+
+                using var cmd = new SqlCommand(query, connection);
+                    using SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Flashcard flashcard = new();
+                            flashcard.ID = (int)reader["ID"];
+                            flashcard.StackID = (int)reader["StackID"];     
+                            flashcard.FrontText = (string)reader["FrontText"];      
+                            flashcard.BackText = (string)reader["BackText"];
+                            flashcard.Marker = (bool)reader["Marker"];
+                            FlashcardList.Add(flashcard);      
+                        }
+            
+            return FlashcardList;
+        }
+
+        public Flashcard? FlashcardGet(string flashcardID) {
+            Flashcard flashcard = new();
+
+            using var connection = new SqlConnection(ConnectionString);
+                string query = 
+                """
+                SELECT * FROM Flashcards
+                WHERE ID = @ID
+                """;
+                connection.Open();
+
+                using var cmd = new SqlCommand(query, connection);                
+                    cmd.Parameters.Add(new SqlParameter("@ID", flashcardID));
+
+                    using SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read()) {
+                            flashcard.ID = (int)reader["ID"];
+                            flashcard.StackID = (int)reader["StackID"];
+                            flashcard.FrontText = (string)reader["FrontText"];
+                            flashcard.BackText = (string)reader["BackText"];
+                            flashcard.Marker = (bool)reader["Marker"];
+                        }
+            
+            return flashcard;
+        }
+
+        public void RecordPost(Flashcard flashcard) {
+            using var connection = new SqlConnection(ConnectionString);
+                string query = 
+                """
+                INSERT INTO Flashcards (StackID, FrontText, BackText, Marker)
+                VALUES (@StackID, @FrontText, @BackText, @Marker)
+                """;
+                connection.Open();
+
+                using var cmd = new SqlCommand(query, connection);
+                    cmd.Parameters.Add(new SqlParameter("@StackID", flashcard.StackID));
+                    cmd.Parameters.Add(new SqlParameter("@FrontText", flashcard.FrontText));
+                    cmd.Parameters.Add(new SqlParameter("@BackText", flashcard.BackText));
+                    cmd.Parameters.Add(new SqlParameter("@Marker", flashcard.Marker));
+                    cmd.ExecuteNonQuery();
+                    Console.WriteLine("Flashcard added.");
+        }
+
+        public void RecordUpdate(Flashcard flashcard) {
+            using var connection = new SqlConnection(ConnectionString);
+                string query = 
+                """
+                UPDATE Flashcards
+                SET StackID = @StackID, FrontText = @FrontText,
+                BackText = @BackText, Marker = @Marker
+                WHERE ID = @ ID
+                """;
+                connection.Open();
+
+                using var cmd = new SqlCommand(query, connection);
+                    cmd.Parameters.Add(new SqlParameter("@StackID", flashcard.StackID));
+                    cmd.Parameters.Add(new SqlParameter("@FrontText", flashcard.FrontText));
+                    cmd.Parameters.Add(new SqlParameter("@BackText", flashcard.BackText));
+                    cmd.Parameters.Add(new SqlParameter("@Marker", flashcard.Marker));
+                    cmd.ExecuteNonQuery();
+                    Console.WriteLine("Flashcard Updated.");
+        }
+
+        public void RecordDelete(Flashcard flashcard) {
+            using var connection = new SqlConnection(ConnectionString);
+                string query = 
+                """
+                DELETE FROM Flashcards 
+                WHERE ID = @ID
+                """;
+                connection.Open();
+
+                using var cmd = new SqlCommand(query, connection);
+                    cmd.Parameters.Add(new SqlParameter("@ID", flashcard.ID));
+                    cmd.ExecuteNonQuery();
+                    Console.WriteLine("Flashcard Deleted.");
         }
     }
 }

@@ -1,7 +1,7 @@
 namespace FlashcardApp;
 
 public class Flashcard {
-    public int Id { get; set; }
+    public int ID { get; set; }
     public int StackID { get; set; }
     public string FrontText { get; set; } = "";
     public string BackText { get; set; } = "";
