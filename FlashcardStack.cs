@@ -51,4 +51,17 @@ public class RecordMapper {
             DateAndTime = record.DateAndTime
         };
     }
+
+    public List<RecordDTO> RecordDTOMapper(List<Record> records) {
+        List<RecordDTO> recordDTOList = new();
+        
+        foreach (var record in records) {
+            RecordDTO recordDTO = new() { 
+                Total = record.Total, Correct = record.Correct, DateAndTime = record.DateAndTime
+            };
+            recordDTOList.Add(recordDTO);
+        }
+        
+        return recordDTOList;
+    }
 }
