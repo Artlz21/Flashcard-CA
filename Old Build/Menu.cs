@@ -1,37 +1,16 @@
 using Microsoft.VisualBasic;
 
 namespace FlashcardApp; 
-public class Menu () {
+public class Menu (string connectionString) {
     private StackManager stackManager = new();
     private CardManager cardManager = new();
+    private FlashcardServices flashcardServices = new(connectionString);
     public void StartApp() {
-        // Sample data to work with. Need to reconfigure to align with new DTO design for use.
-        Flashcard FirstCard = new() { Id = 1, StackID = 1, FrontText = "First", BackText = "First"};
-        Flashcard SecondCard = new() { Id = 2, StackID = 1, FrontText = "Second", BackText = "Second"};
-        Flashcard ThirdCard = new() { Id = 3, StackID = 1, FrontText = "Third", BackText = "Third"};
-        Flashcard FourthCard = new() { Id = 4, StackID = 2, FrontText = "Fourth", BackText = "Fourth"};
-        FlashcardStack First = new() { Id = 1, Name = "First" };
-        FlashcardStack Second = new() { Id = 2, Name = "Second" };
-        FlashcardStack Third = new() { Id = 3, Name = "Third" };
-        List<FlashcardStack> ListOfStacks = [First, Second, Third];
-        List<Flashcard> ListOfFlashCards = [FirstCard, SecondCard, ThirdCard, FourthCard ];
         FlashcardStackDTO? stack; 
         List<FlashCardDTO> flashcardsBelongingToStack;
 
-        FlashCardMapper flashCardMapper = new();
-        FlashcardStackMapper flashcardStackMapper = new();
-        List<FlashcardStackDTO> FlashCardStackDTOs = new();
-        
-        foreach (var flashcardStack in ListOfStacks) {
-            var FlashcardsBelongingToStack = ListOfFlashCards
-                .Where(card => card.StackID == flashcardStack.Id)
-                .Select(card => flashCardMapper.FlashCardDTOMapper(card))
-                .ToList();
-            
-            FlashcardStackDTO stackDTO = flashcardStackMapper.FlashcardStackDTOMapper(flashcardStack, FlashcardsBelongingToStack);
-            FlashCardStackDTOs.Add(stackDTO);
-        }
-        
+        List<FlashcardStackDTO>? FlashCardStackDTOs = flashcardServices.GetAllStackDTOs();
+
         int count;
         // Condition and loop keeping app running 
         /*
@@ -259,7 +238,7 @@ public class Menu () {
             """);
     }
 
-    private void ShowListOfStacks(List<FlashcardStackDTO> list) {
+    private void ShowListOfStacks(List<FlashcardStackDTO>? list) {
         try {
             Console.WriteLine 
                 ("""

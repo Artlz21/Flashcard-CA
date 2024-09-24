@@ -2,6 +2,7 @@ using System.Data.SqlClient;
 using System.Globalization;
 
 namespace FlashcardApp;
+
 public class DatabaseManager {
     private readonly string ConnectionString;
 
@@ -29,7 +30,7 @@ public class DatabaseManager {
         return FlashcardStackList;
     }
 
-    public FlashcardStack? FlashcardStackGet(string stack) {
+    public FlashcardStack? FlashcardStackGet(FlashcardStack stack) {
         FlashcardStack flashcardStack = new();
 
         using var connection = new SqlConnection(ConnectionString);
@@ -41,7 +42,7 @@ public class DatabaseManager {
             connection.Open();
 
             using var cmd = new SqlCommand(query, connection);                
-                cmd.Parameters.Add(new SqlParameter("@StackName", stack));
+                cmd.Parameters.Add(new SqlParameter("@StackName", stack.Name));
 
                 using SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read()) {
@@ -122,8 +123,8 @@ public class DatabaseManager {
         return RecordList;
     }
 
-    public Record? RecordGet(string recordID) {
-        Record record = new();
+    public Record? RecordGet(Record record) {
+        Record _record = new();
 
         using var connection = new SqlConnection(ConnectionString);
             string query = 
@@ -134,18 +135,18 @@ public class DatabaseManager {
             connection.Open();
 
             using var cmd = new SqlCommand(query, connection);                
-                cmd.Parameters.Add(new SqlParameter("@recordID", recordID));
+                cmd.Parameters.Add(new SqlParameter("@recordID", record.ID));
 
                 using SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read()) {
-                        record.ID = (int)reader["ID"];
-                        record.StackID = (int)reader["StackID"];     
-                        record.Total = (int)reader["Total"];      
-                        record.Correct = (int)reader["Correct"];
-                        record.DateAndTime = (DateTime)reader["DateAndTime"];
+                        _record.ID = (int)reader["ID"];
+                        _record.StackID = (int)reader["StackID"];     
+                        _record.Total = (int)reader["Total"];      
+                        _record.Correct = (int)reader["Correct"];
+                        _record.DateAndTime = (DateTime)reader["DateAndTime"];
                     }
         
-        return record;
+        return _record;
     }
 
     public void RecordPost(Record record) {
@@ -224,8 +225,8 @@ public class DatabaseManager {
         return FlashcardList;
     }
 
-    public Flashcard? FlashcardGet(string flashcardID) {
-        Flashcard flashcard = new();
+    public Flashcard? FlashcardGet(Flashcard flashcard) {
+        Flashcard _flashcard = new();
 
         using var connection = new SqlConnection(ConnectionString);
             string query = 
@@ -236,7 +237,7 @@ public class DatabaseManager {
             connection.Open();
 
             using var cmd = new SqlCommand(query, connection);                
-                cmd.Parameters.Add(new SqlParameter("@ID", flashcardID));
+                cmd.Parameters.Add(new SqlParameter("@ID", flashcard.ID));
 
                 using SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read()) {
@@ -247,10 +248,10 @@ public class DatabaseManager {
                         flashcard.Marker = (bool)reader["Marker"];
                     }
         
-        return flashcard;
+        return _flashcard;
     }
 
-    public void RecordPost(Flashcard flashcard) {
+    public void FlashcardPost(Flashcard flashcard) {
         using var connection = new SqlConnection(ConnectionString);
             string query = 
             """
@@ -268,7 +269,7 @@ public class DatabaseManager {
                 Console.WriteLine("Flashcard added.");
     }
 
-    public void RecordUpdate(Flashcard flashcard) {
+    public void FlashcardUpdate(Flashcard flashcard) {
         using var connection = new SqlConnection(ConnectionString);
             string query = 
             """
@@ -288,7 +289,7 @@ public class DatabaseManager {
                 Console.WriteLine("Flashcard Updated.");
     }
 
-    public void RecordDelete(Flashcard flashcard) {
+    public void FlashcardDelete(Flashcard flashcard) {
         using var connection = new SqlConnection(ConnectionString);
             string query = 
             """

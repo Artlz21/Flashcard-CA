@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashcardApp", "FlashcardApp.csproj", "{1AA186C3-5E8B-497F-A542-E5E22D85761E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashcardApp", "FlashcardApp.csproj", "{B8319E0D-96BC-48CB-9662-38C77540AD4C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1AA186C3-5E8B-497F-A542-E5E22D85761E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1AA186C3-5E8B-497F-A542-E5E22D85761E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1AA186C3-5E8B-497F-A542-E5E22D85761E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1AA186C3-5E8B-497F-A542-E5E22D85761E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8319E0D-96BC-48CB-9662-38C77540AD4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8319E0D-96BC-48CB-9662-38C77540AD4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8319E0D-96BC-48CB-9662-38C77540AD4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8319E0D-96BC-48CB-9662-38C77540AD4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {1CC592A9-3E72-4D2E-B16C-57F982740DF2}
+		SolutionGuid = {636AF7A7-EC02-4698-A59D-76B8A6E9FBA2}
 	EndGlobalSection
 EndGlobal

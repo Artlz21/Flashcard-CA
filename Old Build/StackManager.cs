@@ -3,11 +3,13 @@ using System.Linq;
 namespace FlashcardApp;
 public class StackManager () {
     // Creates new stacks to hold flashcards and add to list of existing stacks
-    public void AddNewStack (List<FlashcardStackDTO> ListOfStacks) {
+    public void AddNewStack (List<FlashcardStackDTO>? ListOfStacks) {
+        bool checkIfNameIsRepeated = false;
         Console.WriteLine("\nEnter a new Stack name: ");
         string newStackName = Console.ReadLine() ?? ""; 
 
-        bool checkIfNameIsRepeated = ListOfStacks.Any(stack => stack.Name == newStackName);
+        if (ListOfStacks != null)
+            checkIfNameIsRepeated = ListOfStacks.Any(stack => stack.Name == newStackName);
 
         // Checks if user input is valid
         if (string.IsNullOrEmpty(newStackName) || checkIfNameIsRepeated) {
