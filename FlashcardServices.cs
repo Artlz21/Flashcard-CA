@@ -29,4 +29,38 @@ public class FlashcardServices(string ConnectionString)
         }
         return stackDTOs;
     }
+
+    public void AddCardToStack(FlashcardStackDTO flashcardStackDTO, FlashcardDTO flashcardDTO) {
+        flashcardStackDTO.Flashcards?.Add(flashcardDTO);
+        FlashcardStack? flashcardStack = databaseManager.FlashcardStackGet(flashcardStackDTO);
+
+        if (flashcardStack != null) {
+            Flashcard flashcard = new() { 
+                FrontText = flashcardDTO.FrontText, 
+                BackText = flashcardDTO.BackText, 
+                StackID = flashcardStack.ID
+            };
+
+            databaseManager.FlashcardPost(flashcard);
+        }
+        else {
+            Console.WriteLine("No Stack found matching name...");
+        }
+    }
+
+    public void DeleteCardFomStack(FlashcardStackDTO flashcardStackDTO, FlashcardDTO flashcardDTO) {
+        flashcardStackDTO.Flashcards?.Remove(flashcardDTO);
+        databaseManager.FlashcardDelete(flashcardDTO);
+    }
+
+    public void AddStack(List<FlashcardStackDTO> listOfStacks, FlashcardStackDTO flashcardStackDTO) {
+        listOfStacks.Add(flashcardStackDTO);
+        FlashcardStack flashcardStack = new() { Name = flashcardStackDTO.Name };
+        databaseManager.FlashcardStackPost(flashcardStack);
+    }
+
+    public void DeleteStack(List<FlashcardStackDTO> listOfStacks, FlashcardStackDTO flashcardStackDTO) {
+        listOfStacks.Remove(flashcardStackDTO);
+        databaseManager.FlashcardStackDelete(flashcardStackDTO);
+    }
 }

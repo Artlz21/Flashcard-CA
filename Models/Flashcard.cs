@@ -9,6 +9,7 @@ public class Flashcard {
 }
 
 public class FlashcardDTO(Flashcard flashcard) {
+    public int ID { get; set;}
     public string FrontText = flashcard.FrontText;
     public string BackText = flashcard.BackText;
     public bool? Marker = flashcard.Marker;

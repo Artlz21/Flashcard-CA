@@ -30,7 +30,7 @@ public class DatabaseManager {
         return FlashcardStackList;
     }
 
-    public FlashcardStack? FlashcardStackGet(FlashcardStack stack) {
+    public FlashcardStack? FlashcardStackGet(FlashcardStackDTO stack) {
         FlashcardStack flashcardStack = new();
 
         using var connection = new SqlConnection(ConnectionString);
@@ -68,7 +68,7 @@ public class DatabaseManager {
                 Console.WriteLine("New stack added.");
     }
 
-    public void FlashcardStackDelete(FlashcardStack flashcardStack) {
+    public void FlashcardStackDelete(FlashcardStackDTO flashcardStack) {
         using var connection = new SqlConnection(ConnectionString);
             string query = 
             """
@@ -289,7 +289,7 @@ public class DatabaseManager {
                 Console.WriteLine("Flashcard Updated.");
     }
 
-    public void FlashcardDelete(Flashcard flashcard) {
+    public void FlashcardDelete(FlashcardDTO flashcard) {
         using var connection = new SqlConnection(ConnectionString);
             string query = 
             """
