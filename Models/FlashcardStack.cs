@@ -5,10 +5,10 @@ public class FlashcardStack {
     public string Name { get; set; } = "";
 }
 
-public class FlashcardStackDTO(FlashcardStack stack, List<FlashcardDTO>? flashcards, List<RecordDTO>? records) {
+public class FlashcardStackDTO(FlashcardStack stack, List<FlashcardDTO> flashcards, List<RecordDTO> records) {
     public string Name = stack.Name;
-    public List<FlashcardDTO>? Flashcards = flashcards;
-    public List<RecordDTO>? Records = records;
+    public List<FlashcardDTO> Flashcards = flashcards;
+    public List<RecordDTO> Records = records;
     public int NumberOfCards => Flashcards?.Count ?? 0;
 }
 

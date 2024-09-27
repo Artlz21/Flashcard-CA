@@ -10,7 +10,7 @@ public class DatabaseManager {
         ConnectionString = connection;
     }
 
-    public List<FlashcardStack>? FlashcardStackGetAll() {
+    public List<FlashcardStack> FlashcardStackGetAll() {
         List<FlashcardStack> FlashcardStackList = new();
         
         using var connection = new SqlConnection(ConnectionString);
@@ -30,7 +30,7 @@ public class DatabaseManager {
         return FlashcardStackList;
     }
 
-    public FlashcardStack? FlashcardStackGet(FlashcardStackDTO stack) {
+    public FlashcardStack? FlashcardStackGet(FlashcardStack stack) {
         FlashcardStack flashcardStack = new();
 
         using var connection = new SqlConnection(ConnectionString);
@@ -68,7 +68,7 @@ public class DatabaseManager {
                 Console.WriteLine("New stack added.");
     }
 
-    public void FlashcardStackDelete(FlashcardStackDTO flashcardStack) {
+    public void FlashcardStackDelete(FlashcardStack flashcardStack) {
         using var connection = new SqlConnection(ConnectionString);
             string query = 
             """
@@ -83,24 +83,7 @@ public class DatabaseManager {
                 Console.WriteLine("Stack deleted.");
     }
 
-    public void FlashcardStackUpdate(FlashcardStack flashcardStack) {
-        using var connection = new SqlConnection(ConnectionString);
-            string query = 
-            """
-            UPDATE FlashcardStacks 
-            SET StackName = @StackName
-            WHERE ID = @ID
-            """;
-            connection.Open();
-
-            using var cmd = new SqlCommand(query, connection);
-                cmd.Parameters.Add(new SqlParameter("@StackName", flashcardStack.Name));
-                cmd.Parameters.Add(new SqlParameter("@ID", flashcardStack.ID));
-                cmd.ExecuteNonQuery();
-                Console.WriteLine("Stack updated");
-    }
-
-    public List<Record>? RecordsGetAll() {
+    public List<Record> RecordsGetAll() {
         List<Record> RecordList = new();
         
         using var connection = new SqlConnection(ConnectionString);
@@ -167,26 +150,6 @@ public class DatabaseManager {
                 Console.WriteLine("Record added.");
     }
 
-    public void RecordUpdate(Record record) {
-        using var connection = new SqlConnection(ConnectionString);
-            string query = 
-            """
-            UPDATE Records
-            SET StackID = @StackID, Correct = @Correct,
-            Total = @Total, DateAndTime = @DateAndTime
-            WHERE ID = @ ID
-            """;
-            connection.Open();
-
-            using var cmd = new SqlCommand(query, connection);
-                cmd.Parameters.Add(new SqlParameter("@StackID", record.StackID));
-                cmd.Parameters.Add(new SqlParameter("@Correct", record.Correct));
-                cmd.Parameters.Add(new SqlParameter("@Total", record.Total));
-                cmd.Parameters.Add(new SqlParameter("@DateAndTime", record.DateAndTime));
-                cmd.ExecuteNonQuery();
-                Console.WriteLine("Record Updated.");
-    }
-
     public void RecordDelete(Record record) {
         using var connection = new SqlConnection(ConnectionString);
             string query = 
@@ -202,7 +165,7 @@ public class DatabaseManager {
                 Console.WriteLine("Record Deleted.");
     }
 
-    public List<Flashcard>? FlashcardGetAll() {
+    public List<Flashcard> FlashcardGetAll() {
         List<Flashcard> FlashcardList = new();
         
         using var connection = new SqlConnection(ConnectionString);
@@ -241,11 +204,11 @@ public class DatabaseManager {
 
                 using SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read()) {
-                        flashcard.ID = (int)reader["ID"];
-                        flashcard.StackID = (int)reader["StackID"];
-                        flashcard.FrontText = (string)reader["FrontText"];
-                        flashcard.BackText = (string)reader["BackText"];
-                        flashcard.Marker = (bool)reader["Marker"];
+                        _flashcard.ID = (int)reader["ID"];
+                        _flashcard.StackID = (int)reader["StackID"];
+                        _flashcard.FrontText = (string)reader["FrontText"];
+                        _flashcard.BackText = (string)reader["BackText"];
+                        _flashcard.Marker = (bool)reader["Marker"];
                     }
         
         return _flashcard;
@@ -269,27 +232,7 @@ public class DatabaseManager {
                 Console.WriteLine("Flashcard added.");
     }
 
-    public void FlashcardUpdate(Flashcard flashcard) {
-        using var connection = new SqlConnection(ConnectionString);
-            string query = 
-            """
-            UPDATE Flashcards
-            SET StackID = @StackID, FrontText = @FrontText,
-            BackText = @BackText, Marker = @Marker
-            WHERE ID = @ ID
-            """;
-            connection.Open();
-
-            using var cmd = new SqlCommand(query, connection);
-                cmd.Parameters.Add(new SqlParameter("@StackID", flashcard.StackID));
-                cmd.Parameters.Add(new SqlParameter("@FrontText", flashcard.FrontText));
-                cmd.Parameters.Add(new SqlParameter("@BackText", flashcard.BackText));
-                cmd.Parameters.Add(new SqlParameter("@Marker", flashcard.Marker));
-                cmd.ExecuteNonQuery();
-                Console.WriteLine("Flashcard Updated.");
-    }
-
-    public void FlashcardDelete(FlashcardDTO flashcard) {
+    public void FlashcardDelete(Flashcard flashcard) {
         using var connection = new SqlConnection(ConnectionString);
             string query = 
             """

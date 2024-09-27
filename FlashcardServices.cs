@@ -6,23 +6,23 @@ using Microsoft.IdentityModel.Tokens;
 namespace FlashcardApp;
 public class FlashcardServices(string ConnectionString)
 {
-    private DatabaseManager databaseManager = new(ConnectionString);
+    private readonly DatabaseManager databaseManager = new(ConnectionString);
 
-    public List<FlashcardStackDTO>? GetAllStackDTOs() {
+    public List<FlashcardStackDTO> GetAllStackDTOs() {
         List<FlashcardStack>? stacks = databaseManager.FlashcardStackGetAll();
         List<Record>? records = databaseManager.RecordsGetAll();
         List<Flashcard>? flashcards = databaseManager.FlashcardGetAll();
         List<FlashcardStackDTO> stackDTOs = new();
         
         if (stacks == null || stacks.Count == 0)
-            return null;
+            return stackDTOs;
 
         foreach (var stack in stacks) {
             List<Record>? recordsBelongingToStack = records?.FindAll(r => r.StackID == stack.ID);
             List<Flashcard>? flashcardsBelongingToStack = flashcards?.FindAll(f => f.StackID == stack.ID);
 
-            List<RecordDTO>? recordDTOs = recordsBelongingToStack?.ConvertAll(r => new RecordDTO(r));
-            List<FlashcardDTO>? flashcardDTOs = flashcardsBelongingToStack?.ConvertAll(f => new FlashcardDTO(f));
+            List<RecordDTO> recordDTOs = recordsBelongingToStack?.ConvertAll(r => new RecordDTO(r)) ?? new();
+            List<FlashcardDTO> flashcardDTOs = flashcardsBelongingToStack?.ConvertAll(f => new FlashcardDTO(f)) ?? new();
 
             FlashcardStackDTO flashcardStackDTO = new(stack, flashcardDTOs, recordDTOs);
             stackDTOs.Add(flashcardStackDTO);
@@ -31,8 +31,9 @@ public class FlashcardServices(string ConnectionString)
     }
 
     public void AddCardToStack(FlashcardStackDTO flashcardStackDTO, FlashcardDTO flashcardDTO) {
-        flashcardStackDTO.Flashcards?.Add(flashcardDTO);
-        FlashcardStack? flashcardStack = databaseManager.FlashcardStackGet(flashcardStackDTO);
+        FlashcardStack _flashcardStack = new() { Name = flashcardStackDTO.Name };
+        flashcardStackDTO.Flashcards.Add(flashcardDTO);
+        FlashcardStack? flashcardStack = databaseManager.FlashcardStackGet(_flashcardStack);
 
         if (flashcardStack != null) {
             Flashcard flashcard = new() { 
@@ -49,8 +50,14 @@ public class FlashcardServices(string ConnectionString)
     }
 
     public void DeleteCardFomStack(FlashcardStackDTO flashcardStackDTO, FlashcardDTO flashcardDTO) {
-        flashcardStackDTO.Flashcards?.Remove(flashcardDTO);
-        databaseManager.FlashcardDelete(flashcardDTO);
+        if (flashcardStackDTO.Flashcards.IsNullOrEmpty() || !flashcardStackDTO.Flashcards.Contains(flashcardDTO)){
+            Console.WriteLine("Flashcard not found...");
+        }
+        else {
+            flashcardStackDTO.Flashcards.Remove(flashcardDTO);
+            Flashcard flashcard = new() { ID = flashcardDTO.ID };
+            databaseManager.FlashcardDelete(flashcard);
+        }
     }
 
     public void AddStack(List<FlashcardStackDTO> listOfStacks, FlashcardStackDTO flashcardStackDTO) {
@@ -61,6 +68,7 @@ public class FlashcardServices(string ConnectionString)
 
     public void DeleteStack(List<FlashcardStackDTO> listOfStacks, FlashcardStackDTO flashcardStackDTO) {
         listOfStacks.Remove(flashcardStackDTO);
-        databaseManager.FlashcardStackDelete(flashcardStackDTO);
+        FlashcardStack flashcardStack = new() { Name = flashcardStackDTO.Name };
+        databaseManager.FlashcardStackDelete(flashcardStack);
     }
 }
