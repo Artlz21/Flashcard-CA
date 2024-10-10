@@ -6,6 +6,9 @@ using Microsoft.IdentityModel.Tokens;
 namespace FlashcardApp;
 public class FlashcardServices(string ConnectionString)
 {
+    public FlashcardServices(){
+        
+    }
     private readonly DatabaseManager databaseManager = new(ConnectionString);
 
     public List<FlashcardStackDTO> GetAllStackDTOs() {

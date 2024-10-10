@@ -2,8 +2,9 @@ namespace FlashcardApp;
 
 
 public class CardManager () {
-    public List<FlashCardDTO> GetCardsBelongingToStack(FlashcardStackDTO stack) {
-        List<FlashCardDTO> ListOfCards = [];
+    FlashcardServices flashcardServices = new;
+    public List<FlashcardDTO> GetCardsBelongingToStack(FlashcardStackDTO stack) {
+        List<FlashcardDTO> ListOfCards = [];
 
         foreach (var card in stack.Flashcards) {
             ListOfCards.Add(card);
@@ -12,7 +13,7 @@ public class CardManager () {
         return ListOfCards;
     }
 
-    public FlashCardDTO? CreateNewCard() {
+    public FlashcardDTO? CreateNewCard() {
         Console.WriteLine("\nEnter the Front text of card");
         string frontText = Console.ReadLine() ?? "";
         if(frontText == "") {
@@ -29,8 +30,10 @@ public class CardManager () {
             Console.ReadLine();
             return null;
         }
+        
+        Flashcard flashcard = new() { FrontText = frontText, BackText = backText };
 
-        return new FlashCardDTO { FrontText = frontText, BackText = backText };
+        return new FlashcardDTO(flashcard);
     }
 
     public bool DeleteFlashcard(FlashcardStackDTO stack) {
@@ -40,10 +43,10 @@ public class CardManager () {
             return false;
         }
 
-        FlashCardDTO? flashcardToDelete = stack.Flashcards.ElementAt(cardNumber - 1);
+        FlashcardDTO? flashcardToDelete = stack.Flashcards.ElementAt(cardNumber - 1);
 
         if (flashcardToDelete != null) {
-            stack.Flashcards.Remove(flashcardToDelete);
+            flashcardServices.DeleteCardFomStack(stack, flashcardToDelete);
             Console.WriteLine($"Flashcard number {cardNumber} has been removed.");
             return true;
         } 

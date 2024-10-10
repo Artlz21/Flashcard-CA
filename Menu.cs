@@ -8,15 +8,11 @@ public class Menu(string connectionString) {
     private FlashcardServices flashcardServices = new(connectionString);
     public void StartApp() {
         FlashcardStackDTO? stack; 
-        List<FlashCardDTO> flashcardsBelongingToStack;
 
-        List<FlashcardStackDTO>? FlashCardStackDTOs = flashcardServices.GetAllStackDTOs();
+        List<FlashcardStackDTO> FlashCardStackDTOs = flashcardServices.GetAllStackDTOs();
 
         int count;
-        // Condition and loop keeping app running 
-        /*
-        Need to recofig each use of stacks so as to use new DTO design for each method for better practice.
-        */
+        
         bool exitApp = false;
         while (!exitApp) {
             try {
@@ -42,7 +38,7 @@ public class Menu(string connectionString) {
                         break;
                     // Deletes an existing stack from list
                     case 2:
-                        if (CheckListIsFilled(FlashCardStackDTOs)) break;
+                        if (!CheckListIsFilled(FlashCardStackDTOs)) break;
 
                         ShowListOfStacks(FlashCardStackDTOs);
                         Console.WriteLine("\nEnter a Stack name to delete: ");
@@ -69,7 +65,7 @@ public class Menu(string connectionString) {
                     // Adds a new card to existing stack
                     case 4:            
                         // Check if list of stacks is not empty            
-                        if (CheckListIsFilled(FlashCardStackDTOs)) break;
+                        if (!CheckListIsFilled(FlashCardStackDTOs)) break;
 
                         // Show list of stacks for user to select one to add card too
                         ShowListOfStacks(FlashCardStackDTOs);
@@ -84,15 +80,14 @@ public class Menu(string connectionString) {
 
                         // Gets all cards belonging to selected stack clears screen and shows as a list
                         Console.Clear();
-                        flashcardsBelongingToStack = cardManager.GetCardsBelongingToStack(stack);
                         count = 1;
-                        foreach(var card in flashcardsBelongingToStack) {
+                        foreach(var card in stack.Flashcards) {
                             Console.WriteLine($"{count}. {card.FrontText}");
                             count++;
                         }
 
                         // Prompts user to add front and back side of a new card
-                        FlashCardDTO? flashCard = cardManager.CreateNewCard();
+                        FlashcardDTO? flashCard = cardManager.CreateNewCard();
 
                         if (flashCard == null) {
                             Console.WriteLine("\nCard was not added...");
@@ -124,9 +119,8 @@ public class Menu(string connectionString) {
 
                         // Gets all cards belonging to selected stack clears screen and shows as a list
                         Console.Clear();
-                        flashcardsBelongingToStack = cardManager.GetCardsBelongingToStack(stack);
                         count = 1;
-                        foreach(var card in flashcardsBelongingToStack) {
+                        foreach(var card in stack.Flashcards) {
                             Console.WriteLine($"{count}. {card.FrontText}");
                             count++;
                         }

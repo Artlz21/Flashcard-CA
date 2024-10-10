@@ -2,11 +2,13 @@ using System.Linq;
 
 namespace FlashcardApp;
 public class StackManager () {
+    public FlashcardServices flashcardServices = new FlashcardServices();
+
     // Creates new stacks to hold flashcards and add to list of existing stacks
     public void AddNewStack (List<FlashcardStackDTO>? ListOfStacks) {
         bool checkIfNameIsRepeated = false;
         Console.WriteLine("\nEnter a new Stack name: ");
-        string newStackName = Console.ReadLine() ?? ""; 
+        string newStackName = Console.ReadLine() ?? "";
 
         if (ListOfStacks != null)
             checkIfNameIsRepeated = ListOfStacks.Any(stack => stack.Name == newStackName);
@@ -34,7 +36,7 @@ public class StackManager () {
     }
 
     public void DeleteStack(List<FlashcardStackDTO> ListOfStacks, FlashcardStackDTO stack) {
-        ListOfStacks.Remove(stack);
+        flashcardServices.DeleteStack(ListOfStacks, stack);
         Console.WriteLine($"Stack named {stack.Name} and all Cards removed");
     }
 
